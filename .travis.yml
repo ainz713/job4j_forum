@@ -6,6 +6,9 @@ jdk:
 services:
   - postgresql
 
+before_install:
+  - psql -c 'create database forum;' -U postgres
+
 sudo: false
 
 after_success:

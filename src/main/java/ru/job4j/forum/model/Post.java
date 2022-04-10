@@ -1,16 +1,31 @@
 package ru.job4j.forum.model;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Objects;
 
+@Entity
+@Table(name = "posts")
 public class Post {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String name;
+
     private String description;
+
     private Calendar created;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "post")
     private List<Comment> comments = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "author_id", nullable = false, updatable = false)
     private User author;
 
     public static Post of(String name, String description, User author) {

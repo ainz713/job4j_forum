@@ -1,18 +1,30 @@
 package ru.job4j.forum.model;
 
+import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Objects;
 
+@Entity
+@Table(name = "comments")
 public class Comment {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String text;
     private Calendar created;
+
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "author_id", nullable = false, updatable = false)
     private User author;
 
-    public static Comment of(String text, User author) {
+    public static Comment of(String text, Post post, User author) {
         Comment comment = new Comment();
         comment.setText(text);
+        comment.setPost(post);
         comment.setAuthor(author);
         comment.setCreated(Calendar.getInstance());
         return comment;
@@ -32,6 +44,14 @@ public class Comment {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
     }
 
     public Calendar getCreated() {
