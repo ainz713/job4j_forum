@@ -2,7 +2,7 @@ CREATE TABLE posts(
                       id SERIAL PRIMARY KEY,
                       name VARCHAR(255) NOT NULL,
                       description TEXT NOT NULL,
-                      created TIMESTAMP WITHOUT TIME ZONE NOT NULL DEFAULT now(),
+                      created TIMESTAMP WITHOUT TIME ZONE DEFAULT now(),
                       author_id INT REFERENCES users(id) NOT NULL
 );
 

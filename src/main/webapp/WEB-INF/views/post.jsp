@@ -36,7 +36,7 @@
     <div class="row justify-content-end">
         <ul class="nav">
             <li class="nav-item"><a class="nav-link" href="<c:url value="/index"/>">Форум</a></li>
-            <li class="nav-item"><a class="nav-link" href="<c:url value="/post/create"/>">Новая тема</a></li>
+            <li class="nav-item"><a class="nav-link" href="<c:url value="/create"/>">Новая тема</a></li>
             <li class="nav-item"><a class="nav-link" href="#"><c:out value="${user.username}"/></a></li>
             <li class="nav-item"><a class="nav-link" href="<c:url value="/logout"/>">Выход</a></li>
         </ul>
@@ -80,9 +80,9 @@
         <div class="row">
             <form id="btnForm" style="width: 100%">
                 <button type="button" class="btn btn-dark pull-left" onclick="reply()">Ответить</button>
-                <c:if test="${user.equals(post.author)}">
+                <c:if test="${user.username.equals(post.author.username)}">
                     <input type="hidden" name="id" value="<c:out value='${post.id}'/>">
-                    <button type="submit" class="btn btn-dark pull-right ml-2" formaction="<c:url value='/post/edit'/>"
+                    <button type="submit" class="btn btn-dark pull-right ml-2" formaction="<c:url value='/edit'/>"
                             formmethod="GET">Редактировать тему</button>
                 </c:if>
             </form>
